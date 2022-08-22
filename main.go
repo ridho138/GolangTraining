@@ -12,6 +12,10 @@ func main() {
 	// 	}
 	// }
 
+	name()
+}
+
+func name() {
 	var names = []string{"Kevin Hugo", "Kadek Bintang Anjasmara", "Guntur Satrya Saputro", "Achmad Fathoni", "Edwin Setya Noegroho", "Jaka Prima Maulana", "Stevanus Dewana", "Hans Parson", "Rizki Ramadhan", "Mochammad Zayyan Ramadhan"}
 
 	for i, s := range names {
