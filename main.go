@@ -6,9 +6,9 @@ func main() {
 
 	for i := 0; i <= 10; i++ {
 		if i%2 == 0 {
-			fmt.Printf("%d Genap", i)
+			fmt.Printf("%d Genap\n", i)
 		} else {
-			fmt.Printf("%d Ganjil", i)
+			fmt.Printf("%d Ganjil\n", i)
 		}
 	}
 }
