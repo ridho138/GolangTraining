@@ -16,17 +16,24 @@ func main() {
 }
 
 func name() {
-	var names = []string{"Kevin Hugo", "Kadek Bintang Anjasmara", "Guntur Satrya Saputro", "Achmad Fathoni", "Edwin Setya Noegroho", "Jaka Prima Maulana", "Stevanus Dewana", "Hans Parson", "Rizki Ramadhan", "Mochammad Zayyan Ramadhan"}
 
-	var namesPointer []*string
-
-	for i := 0; i < len(names); i++ {
-		namesPointer = append(namesPointer, &names[i])
+	type Persons struct {
+		name string
 	}
 
-	var cetakNama = func(l []*string) {
+	var names = []string{"Kevin Hugo", "Kadek Bintang Anjasmara", "Guntur Satrya Saputro", "Achmad Fathoni", "Edwin Setya Noegroho", "Jaka Prima Maulana", "Stevanus Dewana", "Hans Parson", "Rizki Ramadhan", "Mochammad Zayyan Ramadhan"}
+
+	var namesPointer []*Persons
+
+	for i := 0; i < len(names); i++ {
+		var orang Persons
+		orang.name = names[i]
+		namesPointer = append(namesPointer, &orang)
+	}
+
+	var cetakNama = func(l []*Persons) {
 		for _, s := range l {
-			fmt.Println(*s)
+			fmt.Println(s.name)
 		}
 	}
 	cetakNama(namesPointer)
