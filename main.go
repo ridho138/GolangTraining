@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"golangTraining/service"
+)
 
 func main() {
 
@@ -12,7 +15,19 @@ func main() {
 	// 	}
 	// }
 
-	name()
+	//name()
+
+	userSvc := service.NewUserService()
+	res := userSvc.Register(&service.User{Nama: "budi"})
+	fmt.Println(res)
+	res2 := userSvc.Register(&service.User{Nama: "Anto"})
+	fmt.Println(res2)
+
+	resHasil := userSvc.GetUser()
+	fmt.Println("----------------Hasil Get User--------------")
+	for _, v := range resHasil {
+		fmt.Println(v.Nama)
+	}
 }
 
 func name() {
