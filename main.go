@@ -1,55 +1,48 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"golangTraining/service"
+	"net/http"
 )
+
+var PORT = ":8080"
+
+var userSvc = service.NewUserService()
 
 func main() {
 
-	// for i := 0; i <= 10; i++ {
-	// 	if i%2 == 0 {
-	// 		fmt.Printf("%d Genap\n", i)
-	// 	} else {
-	// 		fmt.Printf("%d Ganjil\n", i)
-	// 	}
-	// }
+	http.HandleFunc("/", greet)
+	http.HandleFunc("/user", getUser)
+	http.HandleFunc("/register", registerUser)
 
-	//name()
+	http.ListenAndServe(PORT, nil)
 
-	userSvc := service.NewUserService()
-	res := userSvc.Register(&service.User{Nama: "budi"})
-	fmt.Println(res)
-	res2 := userSvc.Register(&service.User{Nama: "Anto"})
-	fmt.Println(res2)
+}
 
-	resHasil := userSvc.GetUser()
-	fmt.Println("----------------Hasil Get User--------------")
-	for _, v := range resHasil {
-		fmt.Println(v.Nama)
+func greet(w http.ResponseWriter, r *http.Request) {
+	msg := "Hello Word"
+	fmt.Fprint(w, msg)
+}
+
+func getUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	if r.Method == "GET" {
+		resHasil := userSvc.GetUser()
+		json.NewEncoder(w).Encode(resHasil)
+		return
 	}
 }
 
-func name() {
+func registerUser(w http.ResponseWriter, r *http.Request) {
 
-	type Persons struct {
-		name string
+	if r.Method == "POST" {
+		name := r.FormValue("name")
+
+		res := userSvc.Register(&service.User{Nama: name})
+		fmt.Fprint(w, res)
+		return
 	}
-
-	var names = []string{"Kevin Hugo", "Kadek Bintang Anjasmara", "Guntur Satrya Saputro", "Achmad Fathoni", "Edwin Setya Noegroho", "Jaka Prima Maulana", "Stevanus Dewana", "Hans Parson", "Rizki Ramadhan", "Mochammad Zayyan Ramadhan"}
-
-	var namesPointer []*Persons
-
-	for i := 0; i < len(names); i++ {
-		var orang Persons
-		orang.name = names[i]
-		namesPointer = append(namesPointer, &orang)
-	}
-
-	var cetakNama = func(l []*Persons) {
-		for _, s := range l {
-			fmt.Println(s.name)
-		}
-	}
-	cetakNama(namesPointer)
 }
